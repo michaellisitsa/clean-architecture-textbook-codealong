@@ -2,6 +2,8 @@ from dataclasses import dataclass
 import abc
 from placing_bid.money import Money
 
+# from placing_bid.responses import Response
+
 from placing_bid.value_objects import AuctionId, BidderId
 
 
@@ -41,6 +43,8 @@ class PlacingBid:
 
 
 class PlacingBidWebPresenter(PlacingBidOutputBoundary):
+    # Uncomment when presenting Flask response object
+    # response: Response
 
     def present(self, output_dto: PlacingBidOutputDto) -> None:
         message = (
@@ -49,6 +53,7 @@ class PlacingBidWebPresenter(PlacingBidOutputBoundary):
             else f"Your bid is too low. Current price is {output_dto.current_price}"
         )
         # Currently output is in console. But will be a flask Response object in future
+        # i.e. self.response = make_response(jsonify({"message": message}))
         print(f"message: {message}")
 
 
