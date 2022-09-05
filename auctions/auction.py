@@ -1,9 +1,17 @@
+import abc
+import copy
 from bids.bid import Bid
 from placing_bid.money import Money
 from placing_bid.value_objects import AuctionId, BidderId
 
 
 class Auction:
+    def __eq__(self, other: "Auction") -> bool:
+        """
+        When compared using equality, other is the other side of equality
+        """
+        return isinstance(other, Auction) and vars(self) == vars(other)
+
     def __init__(
         self, id: AuctionId, title: str, starting_price: Money, bids: list[Bid]
     ) -> None:
@@ -32,3 +40,29 @@ class Auction:
         if not self.bids:
             return []
         return [self._highest_bid.bidder_id]
+
+
+class AuctionsRepository(abc.ABC):
+    """
+    Data access Interface (Abstract Repository).
+    Allows the use case to fetch the Entitity and persist it afterwards.
+    """
+
+    @abc.abstractmethod
+    def get(self, auction_id: AuctionId) -> Auction:
+        pass
+
+    @abc.abstractmethod
+    def save(self, auction: Auction) -> None:
+        pass
+
+
+class InMemoryAuctionsRepository(AuctionsRepository):
+    def __init__(self) -> None:
+        self._storage: dict[AuctionId, Auction] = {}
+
+    def get(self, auction_id: AuctionId) -> Auction:
+        return copy.deepcopy(self._storage[auction_id])
+
+    def save(self, auction: Auction) -> None:
+        self._storage[auction.id] = copy.deepcopy(auction)
