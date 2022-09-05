@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 import abc
+from auctions.auction import Auction, InMemoryAuctionsRepository
+from bids.bid import Bid
 from placing_bid.money import Money
 
 # from placing_bid.responses import Response
@@ -71,3 +73,12 @@ if __name__ == "__main__":
     use_case = PlacingBid(output_boundary)
     use_case.execute(input_dto)
     expected_output_dto = PlacingBidOutputDto(is_winning=True, current_price=price)
+
+    bids = [Bid(id=1, bidder_id=1, amount=Money(USD, "15.99"))]
+    auction = Auction(
+        id=1, title="Awesome Book", starting_price=Money(USD, "9.99"), bids=bids
+    )
+    repo = InMemoryAuctionsRepository()
+    repo.save(auction)
+    print(f"auction: {auction}")
+    print(f"repo get: {repo.get(auction.id)}")
