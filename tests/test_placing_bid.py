@@ -12,7 +12,7 @@ from bids.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
 
-from placing_bid.placing_bid import (
+from auctions.application.use_cases.placing_bid import (
     PlacingBid,
     PlacingBidInputDto,
     PlacingBidOutputBoundary,
