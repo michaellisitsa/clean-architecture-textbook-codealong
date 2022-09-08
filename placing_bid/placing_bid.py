@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 import abc
-from auctions.auction import Auction, AuctionsRepository, InMemoryAuctionsRepository
+from auctions.application.auction import (
+    Auction,
+    AuctionsRepository,
+    InMemoryAuctionsRepository,
+)
 from bids.bid import Bid
 from placing_bid.money import Money
 

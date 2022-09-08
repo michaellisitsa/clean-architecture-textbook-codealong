@@ -1,7 +1,11 @@
 # from ..placing_bid import *
 import unittest
 from unittest.mock import Mock
-from auctions.auction import Auction, AuctionsRepository, InMemoryAuctionsRepository
+from auctions.application.auction import (
+    Auction,
+    AuctionsRepository,
+    InMemoryAuctionsRepository,
+)
 from bids.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
