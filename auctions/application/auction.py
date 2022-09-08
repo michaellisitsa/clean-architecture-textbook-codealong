@@ -1,5 +1,4 @@
 import abc
-import copy
 from bids.bid import Bid
 from placing_bid.money import Money
 from placing_bid.value_objects import AuctionId, BidderId
@@ -55,14 +54,3 @@ class AuctionsRepository(abc.ABC):
     @abc.abstractmethod
     def save(self, auction: Auction) -> None:
         pass
-
-
-class InMemoryAuctionsRepository(AuctionsRepository):
-    def __init__(self) -> None:
-        self._storage: dict[AuctionId, Auction] = {}
-
-    def get(self, auction_id: AuctionId) -> Auction:
-        return copy.deepcopy(self._storage[auction_id])
-
-    def save(self, auction: Auction) -> None:
-        self._storage[auction.id] = copy.deepcopy(auction)

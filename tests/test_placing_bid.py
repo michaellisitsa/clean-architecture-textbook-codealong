@@ -4,6 +4,8 @@ from unittest.mock import Mock
 from auctions.application.auction import (
     Auction,
     AuctionsRepository,
+)
+from auctions_infrastructure.auctions_infrastructure.repositories.in_memory_auctions_repository import (
     InMemoryAuctionsRepository,
 )
 from bids.bid import Bid
