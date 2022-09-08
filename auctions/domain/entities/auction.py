@@ -1,4 +1,3 @@
-import abc
 from bids.bid import Bid
 from placing_bid.money import Money
 from placing_bid.value_objects import AuctionId, BidderId
@@ -39,18 +38,3 @@ class Auction:
         if not self.bids:
             return []
         return [self._highest_bid.bidder_id]
-
-
-class AuctionsRepository(abc.ABC):
-    """
-    Data access Interface (Abstract Repository).
-    Allows the use case to fetch the Entitity and persist it afterwards.
-    """
-
-    @abc.abstractmethod
-    def get(self, auction_id: AuctionId) -> Auction:
-        pass
-
-    @abc.abstractmethod
-    def save(self, auction: Auction) -> None:
-        pass

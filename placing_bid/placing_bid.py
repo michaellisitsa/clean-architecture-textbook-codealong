@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 import abc
+from auctions.application.repositories.auctions import AuctionsRepository
 from auctions.domain.entities.auction import (
     Auction,
-    AuctionsRepository,
 )
 from auctions_infrastructure.auctions_infrastructure.repositories.in_memory_auctions_repository import (
     InMemoryAuctionsRepository,
