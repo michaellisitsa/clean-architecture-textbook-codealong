@@ -1,5 +1,5 @@
 import copy
-from auctions.application.auction import Auction, AuctionsRepository
+from auctions.domain.entities.auction import Auction, AuctionsRepository
 from placing_bid.value_objects import AuctionId
 
 

@@ -1,7 +1,7 @@
 # from ..placing_bid import *
 import unittest
 from unittest.mock import Mock
-from auctions.application.auction import (
+from auctions.domain.entities.auction import (
     Auction,
     AuctionsRepository,
 )

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import abc
-from auctions.application.auction import (
+from auctions.domain.entities.auction import (
     Auction,
     AuctionsRepository,
 )

@@ -3,7 +3,7 @@ from bids.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
 
-from auctions.application.auction import Auction
+from auctions.domain.entities.auction import Auction
 
 
 class AuctionTests(unittest.TestCase):
