@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import abc
-from auctions.auction import Auction, InMemoryAuctionsRepository
+from auctions.auction import Auction, AuctionsRepository, InMemoryAuctionsRepository
 from bids.bid import Bid
 from placing_bid.money import Money
 
@@ -32,16 +32,26 @@ class PlacingBid:
     def __init__(
         self,
         output_boundary: PlacingBidOutputBoundary,
+        auctions_repo: AuctionsRepository,
     ) -> None:
         self._output_boundary = output_boundary
+        self._auctions_repo = auctions_repo
 
     def execute(self, input_dto: PlacingBidInputDto) -> None:
+        auction = self._auctions_repo.get(input_dto.auction_id)
+        auction.place_bid(
+            bidder_id=input_dto.bidder_id,
+            amount=input_dto.amount,
+        )
+        self._auctions_repo.save(auction)
+        output_dto = PlacingBidOutputDto(
+            is_winning=input_dto.bidder_id in auction.winners,
+            current_price=auction.current_price,
+        )
         # The output data must be presented by an implementation of the output boundary interface
         # The benefit is the output boundary is an argument to this use case.
         # So it allows other boundaries to be used without changing the use case code at all.
-        self._output_boundary.present(
-            PlacingBidOutputDto(is_winning=True, current_price=input_dto.amount)
-        )
+        self._output_boundary.present(output_dto=output_dto)
 
 
 class PlacingBidWebPresenter(PlacingBidOutputBoundary):
@@ -70,9 +80,28 @@ if __name__ == "__main__":
         amount=price,
     )
     output_boundary = PlacingBidWebPresenter()
-    use_case = PlacingBid(output_boundary)
+
+    def _create_repo_with_auction() -> AuctionsRepository:
+        repo = InMemoryAuctionsRepository()
+        fresh_auction = Auction(
+            id=2,
+            title="socks",
+            starting_price=Money(USD, "1.99"),
+            bids=[],
+        )
+        repo.save(fresh_auction)
+        second_auction = Auction(
+            id=3,
+            title="underwear",
+            starting_price=Money(USD, "2.99"),
+            bids=[],
+        )
+        repo.save(second_auction)
+        return repo
+
+    use_case = PlacingBid(output_boundary, _create_repo_with_auction())
     use_case.execute(input_dto)
-    expected_output_dto = PlacingBidOutputDto(is_winning=True, current_price=price)
+    # expected_output_dto = PlacingBidOutputDto(is_winning=True, current_price=price)
 
     bids = [Bid(id=1, bidder_id=1, amount=Money(USD, "15.99"))]
     auction = Auction(

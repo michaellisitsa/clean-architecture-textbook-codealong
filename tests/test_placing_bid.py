@@ -1,7 +1,7 @@
 # from ..placing_bid import *
 import unittest
 from unittest.mock import Mock
-from auctions.auction import Auction, InMemoryAuctionsRepository
+from auctions.auction import Auction, AuctionsRepository, InMemoryAuctionsRepository
 from bids.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
@@ -15,9 +15,25 @@ from placing_bid.placing_bid import (
 
 
 class PlacingBidTests(unittest.TestCase):
+    FRESH_AUCTION_ID = 2
+
     def setUp(self) -> None:
         self.output_boundary_mock = Mock(spec_set=PlacingBidOutputBoundary)
-        self.use_case = PlacingBid(self.output_boundary_mock)
+        repo = self._create_repo_with_auction()
+        self.use_case = PlacingBid(self.output_boundary_mock, repo)
+
+    def _create_repo_with_auction(
+        self,
+    ) -> AuctionsRepository:
+        repo = InMemoryAuctionsRepository()
+        fresh_auction = Auction(
+            id=self.FRESH_AUCTION_ID,
+            title="socks",
+            starting_price=Money(USD, "1.99"),
+            bids=[],
+        )
+        repo.save(fresh_auction)
+        return repo
 
     def test_presets_data_for_winning(self):
         price = Money(USD, "10.00")
