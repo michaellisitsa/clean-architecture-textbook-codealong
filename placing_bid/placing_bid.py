@@ -7,6 +7,7 @@ from placing_bid.money import Money
 # from placing_bid.responses import Response
 
 from placing_bid.value_objects import AuctionId, BidderId
+import attr
 
 
 @dataclass(frozen=True)
@@ -28,14 +29,10 @@ class PlacingBidOutputBoundary(abc.ABC):
         pass
 
 
+@attr.s(auto_attribs=True)
 class PlacingBid:
-    def __init__(
-        self,
-        output_boundary: PlacingBidOutputBoundary,
-        auctions_repo: AuctionsRepository,
-    ) -> None:
-        self._output_boundary = output_boundary
-        self._auctions_repo = auctions_repo
+    _output_boundary: PlacingBidOutputBoundary
+    _auctions_repo: AuctionsRepository
 
     def execute(self, input_dto: PlacingBidInputDto) -> None:
         auction = self._auctions_repo.get(input_dto.auction_id)
