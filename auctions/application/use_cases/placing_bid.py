@@ -12,7 +12,7 @@ from placing_bid.money import Money
 
 # from placing_bid.responses import Response
 
-from placing_bid.value_objects import AuctionId, BidderId
+from auctions.domain.value_objects import AuctionId, BidderId
 import attr
 
 

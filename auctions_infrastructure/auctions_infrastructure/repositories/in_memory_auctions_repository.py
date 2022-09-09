@@ -1,7 +1,7 @@
 import copy
 from auctions.application.repositories.auctions import AuctionsRepository
 from auctions.domain.entities.auction import Auction
-from placing_bid.value_objects import AuctionId
+from auctions.domain.value_objects import AuctionId
 
 
 class InMemoryAuctionsRepository(AuctionsRepository):

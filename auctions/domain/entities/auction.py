@@ -1,6 +1,6 @@
 from bids.bid import Bid
 from placing_bid.money import Money
-from placing_bid.value_objects import AuctionId, BidderId
+from auctions.domain.value_objects import AuctionId, BidderId
 
 
 class Auction:

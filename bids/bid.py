@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from placing_bid.money import Money
-from placing_bid.value_objects import AuctionId, BidId, BidderId
+from auctions.domain.value_objects import AuctionId, BidId, BidderId
 
 
 @dataclass

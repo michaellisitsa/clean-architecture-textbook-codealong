@@ -1,6 +1,6 @@
 import abc
 from auctions.domain.entities.auction import Auction
-from placing_bid.value_objects import AuctionId
+from auctions.domain.value_objects import AuctionId
 
 
 class AuctionsRepository(abc.ABC):
