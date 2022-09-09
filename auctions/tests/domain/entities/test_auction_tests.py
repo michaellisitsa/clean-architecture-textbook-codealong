@@ -1,5 +1,5 @@
 import unittest
-from bids.bid import Bid
+from auctions.domain.entities.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
 

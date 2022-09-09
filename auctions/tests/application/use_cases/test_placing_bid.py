@@ -8,7 +8,7 @@ from auctions.domain.entities.auction import (
 from auctions_infrastructure.auctions_infrastructure.repositories.in_memory_auctions_repository import (
     InMemoryAuctionsRepository,
 )
-from bids.bid import Bid
+from auctions.domain.entities.bid import Bid
 from placing_bid.currency import USD
 from placing_bid.money import Money
 

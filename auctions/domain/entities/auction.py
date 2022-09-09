@@ -1,4 +1,4 @@
-from bids.bid import Bid
+from auctions.domain.entities.bid import Bid
 from placing_bid.money import Money
 from auctions.domain.value_objects import AuctionId, BidderId
 
