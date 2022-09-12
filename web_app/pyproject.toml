@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "my_web_app"
 classifiers = ["Private :: Do Not Upload"]
 version = "0"
-dependencies = ["Flask"]
+dependencies = ["Flask", "Flask-Injector", "Flask-Login", "marshmallow", "marshmallow-dataclass"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
