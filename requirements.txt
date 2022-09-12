@@ -6,3 +6,5 @@
 #
 attrs==22.1.0
     # via -r requirements.in
+injector==0.20.1
+    # via -r requirements.in
