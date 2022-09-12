@@ -10,7 +10,7 @@ from auctions_infrastructure.auctions_infrastructure.repositories.in_memory_auct
 from auctions.domain.entities.bid import Bid
 from placing_bid.money import Money
 
-# from placing_bid.responses import Response
+from flask import Blueprint, Response, abort, jsonify, make_response, request
 
 from auctions.domain.value_objects import AuctionId, BidderId
 import attr
@@ -59,7 +59,7 @@ class PlacingBid:
 
 class PlacingBidWebPresenter(PlacingBidOutputBoundary):
     # Uncomment when presenting Flask response object
-    # response: Response
+    response: Response
 
     def present(self, output_dto: PlacingBidOutputDto) -> None:
         message = (
@@ -67,9 +67,7 @@ class PlacingBidWebPresenter(PlacingBidOutputBoundary):
             if output_dto.is_winning
             else f"Your bid is too low. Current price is {output_dto.current_price}"
         )
-        # Currently output is in console. But will be a flask Response object in future
-        # i.e. self.response = make_response(jsonify({"message": message}))
-        print(f"message: {message}")
+        self.response = make_response(jsonify({"message": message}))
 
 
 if __name__ == "__main__":
